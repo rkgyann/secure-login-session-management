@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">PROJECT 07 / STUDENT ACCESS</p>
+  <h1>Your account.<br>Protected at every step.</h1>
+  <p class="intro">A student portal with password protection, authenticator verification, and sessions that expire when they should.</p>
+  <div class="actions"><a class="button" href="{{ url_for('portal.register') }}">Create an account</a><a class="button secondary" href="{{ url_for('portal.login') }}">Sign in</a></div>
+</section>
+<div class="grid">
+  <article class="card"><span class="number">01</span><h2>Protected passwords</h2><p>Your password is stored as a salted Argon2id hash.</p></article>
+  <article class="card"><span class="number">02</span><h2>A second check</h2><p>Verify sign-ins with a code from your authenticator app.</p></article>
+  <article class="card"><span class="number">03</span><h2>Controlled sessions</h2><p>Automatic expiry and logout keep access under your control.</p></article>
+</div>
+{% endblock %}

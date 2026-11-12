@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Authenticator · Secure Student Portal{% endblock %}
+{% block content %}
+<section class="form-card">
+<p class="eyebrow">SECOND FACTOR</p>
+{% if enrolling %}
+<h1>Connect your authenticator</h1>
+<p>In your authenticator app, add an account and scan this QR code. Then enter the six-digit code it displays.</p>
+<img class="qr" src="{{ url_for('portal.totp_qr') }}" alt="Authenticator enrollment QR code" width="240" height="240">
+<details><summary>Cannot scan? Enter this setup key manually</summary><p class="secret">{{ secret }}</p><p>Choose time-based codes.</p></details>
+<p class="notice">Keep your setup key private. Do not include this page in submission screenshots. If you lose your authenticator, this demo has no authenticator recovery flow.</p>
+{% else %}
+<h1>Verify it is you</h1><p>Enter a fresh code from your authenticator. Each code can be used once.</p>
+{% endif %}
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ g.session.csrf_token }}">
+  <label for="code">Authenticator code</label><input id="code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required>
+  <button type="submit">Verify and open dashboard</button>
+</form>
+</section>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard · Secure Student Portal{% endblock %}
+{% block content %}
+<p class="eyebrow">STUDENT DASHBOARD</p><h1>Hello, {{ user.name }}.</h1><p class="intro">You have completed both steps of sign-in.</p>
+<div class="grid">
+  <article class="card"><span class="badge">Verified</span><h2>Student profile</h2><p>{{ user.email }}</p></article>
+  <article class="card"><span class="badge">Enabled</span><h2>Two-factor authentication</h2><p>Your authenticator adds a second check to every sign-in.</p></article>
+  <article class="card"><span class="badge">Active</span><h2>Current session</h2><p>Expires after {{ config.IDLE_SECONDS // 60 }} minutes of inactivity, or in at most {{ (remaining + 59) // 60 }} minutes.</p></article>
+</div>
+<section class="card"><h2>Account controls</h2><p><a href="{{ url_for('portal.account_security') }}">Change your password</a></p>
+<form method="post" action="{{ url_for('portal.logout') }}"><input type="hidden" name="csrf_token" value="{{ g.session.csrf_token }}"><button type="submit">Log out</button></form></section>
+{% endblock %}

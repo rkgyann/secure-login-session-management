@@ -1,0 +1,13 @@
+.venv/
+.env
+instance/
+certs/
+__pycache__/
+.pytest_cache/
+*.pyc
+.DS_Store
+
+# Local runtime, credentials, and personal workspace files
+terminal.txt
+*.sqlite
+*.db

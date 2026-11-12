@@ -1,0 +1,4 @@
+{% extends 'base.html' %}
+{% block content %}<section class="form-card"><p class="eyebrow">PASSWORD UPDATED</p><h1>Your password has changed.</h1>
+<p>Your previous sessions and reset links are no longer valid. Sign in with your new password and authenticator.</p>
+<a class="button" href="{{ url_for('portal.login') }}">Return to login</a></section>{% endblock %}

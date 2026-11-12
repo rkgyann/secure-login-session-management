@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Secure Student Portal{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <a class="brand" href="{{ url_for('portal.home') }}">Secure Student Portal</a>
+    <nav aria-label="Main navigation">
+      {% if g.session and g.session.stage == 'authenticated' %}
+      <a href="{{ url_for('portal.dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('portal.account_security') }}">Account security</a>
+      {% else %}
+      <a href="{{ url_for('portal.login') }}">Login</a>
+      <a href="{{ url_for('portal.register') }}">Register</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main>
+    {% if error and error is string %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer>Essentials of Cyber Security · Project 7 · Local educational demonstration</footer>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Register · Secure Student Portal{% endblock %}
+{% block content %}
+<section class="form-card">
+<p class="eyebrow">STEP 1 OF 2</p><h1>Create your account</h1>
+<p>Next, you will connect an authenticator app.</p>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ g.session.csrf_token }}">
+  <label for="name">Full name</label><input id="name" name="name" autocomplete="name" minlength="2" maxlength="80" required>
+  <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="username" maxlength="254" required>
+  <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+  <small>Use a unique passphrase of 12–128 characters. Spaces are allowed.</small>
+  <label for="confirm_password">Confirm password</label><input id="confirm_password" name="confirm_password" type="password" autocomplete="new-password" minlength="12" maxlength="128" required>
+  <button type="submit">Continue to authenticator setup</button>
+</form></section>
+{% endblock %}
