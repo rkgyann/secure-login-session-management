@@ -52,14 +52,14 @@ def register():
         else:
             encrypted = current_app.extensions['fernet'].encrypt(pyotp.random_base32().encode()).decode()
             password_hash = current_app.extensions['password_hasher'].hash(password)
-            try:
-                result = db.execute('INSERT INTO users(name, email, password_hash, totp_secret, created_at) VALUES (?, ?, ?, ?, ?)',
-                                    (name, email, password_hash, encrypted, now()))
-            except sqlite3.IntegrityError:
+            result = db.execute('INSERT INTO users(name, email, password_hash, totp_secret, created_at) VALUES (?, ?, ?, ?, ?) ON CONFLICT(email) DO NOTHING RETURNING id',
+                                (name, email, password_hash, encrypted, now())).fetchone()
+            if not result:
                 error = 'Unable to register with these details. Try signing in or use different details.'
             else:
-                audit('registered', result.lastrowid)
-                new_session('enroll', result.lastrowid)
+                user_id = result['id']
+                audit('registered', user_id)
+                new_session('enroll', user_id)
                 db.commit()
                 return redirect(url_for('portal.setup_totp'))
         db.commit()

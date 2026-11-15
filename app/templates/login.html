@@ -8,7 +8,7 @@
   <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="username" maxlength="254" required>
   <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" maxlength="128" required>
   <button type="submit">Continue</button>
-</form><p><a href="{{ url_for('reset.forgot_password') }}">Forgot your password?</a></p>
+</form>{% if reset_enabled %}<p><a href="{{ url_for('reset.forgot_password') }}">Forgot your password?</a></p>{% else %}<p>Password reset is not available in this hosted version.</p>{% endif %}
 <p>New here? <a href="{{ url_for('portal.register') }}">Create an account</a>.</p>
 </section>
 {% endblock %}

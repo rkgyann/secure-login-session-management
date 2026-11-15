@@ -100,8 +100,8 @@ def allowed(buckets):
     for key, _, window in keys:
         db.execute('''INSERT INTO rate_limits VALUES (?, 1, ?)
             ON CONFLICT(bucket) DO UPDATE SET
-            attempts = CASE WHEN expires_at <= ? THEN 1 ELSE attempts + 1 END,
-            expires_at = CASE WHEN expires_at <= ? THEN excluded.expires_at ELSE expires_at END''',
+            attempts = CASE WHEN rate_limits.expires_at <= ? THEN 1 ELSE rate_limits.attempts + 1 END,
+            expires_at = CASE WHEN rate_limits.expires_at <= ? THEN excluded.expires_at ELSE rate_limits.expires_at END''',
                    (key, now() + window, now(), now()))
     return True
 

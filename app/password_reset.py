@@ -6,12 +6,18 @@ import re
 import secrets
 from urllib.parse import urlencode
 
-from flask import Blueprint, current_app, redirect, render_template, request, url_for
+from flask import Blueprint, abort, current_app, redirect, render_template, request, url_for
 
 from .database import get_db
 from . import security as sec
 
 bp = Blueprint('reset', __name__)
+
+@bp.before_request
+def check_reset_enabled():
+    if not current_app.config.get('RESET_ENABLED', True):
+        abort(404)
+
 MESSAGE = 'If the account exists, a password-reset message has been queued. Follow its link within 15 minutes.'
 INVALID = 'This reset link is invalid, expired, or already used. Request a new link.'
 

@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Register · Secure Student Portal{% endblock %}
 {% block content %}
+{% if not reset_enabled %}<p>Email addresses are used as usernames and are not verified. Password reset is not available in this hosted version. Keep your password and authenticator safe.</p>{% endif %}
 <section class="form-card">
 <p class="eyebrow">STEP 1 OF 2</p><h1>Create your account</h1>
 <p>Next, you will connect an authenticator app.</p>
