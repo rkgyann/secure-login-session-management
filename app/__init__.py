@@ -3,6 +3,7 @@ import logging
 import base64
 import hashlib
 import ipaddress
+from urllib.parse import quote
 from pathlib import Path
 
 from argon2 import PasswordHasher
@@ -29,6 +30,10 @@ def create_app(test_config=None):
                       MAX_CONTENT_LENGTH=16 * 1024,
                       TRUSTED_HOSTS=['localhost', '127.0.0.1'], RESET_ENABLED=True)
     if os.getenv('RENDER'):
+        db_password = os.environ.get('DATABASE_PASSWORD', '')
+        if not db_password:
+            raise RuntimeError('Database password is required.')
+        app.config['DATABASE_URL'] = ('postgresql://postgres.iqjjabtmmobdrklmcjrv:' + quote(db_password, safe='') + '@aws-1-ap-southeast-2.pooler.supabase.com:5432/postgres?sslmode=require')
         material = os.environ.get('PORTAL_MASTER_SECRET', '')
         if len(material) < 32:
             raise RuntimeError('A generated portal master secret is required.')
